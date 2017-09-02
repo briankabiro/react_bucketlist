@@ -21,8 +21,21 @@ export default class Login extends Component{
 		}).then((response) => {
 			console.log('this is data', response)
 			console.log(response.data.token)
+			console.log(response.status)
+			axios.get('http://localhost:5000/bucketlists/', {
+				headers:{
+					'Authorization': "Bearer " + response.data.token
+				},
+			}).then((data) => {
+				console.log('bucketlist data', data)
+			})
 		}).catch((err) => {
-			console.error("returns error", err)
+			if (err.response) {
+				console.log(err.response.status)
+				console.log(err.response.data)
+			}else{
+				console.error("returns error", err)				
+			}		
 		})
 	}
 
