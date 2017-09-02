@@ -3,12 +3,13 @@ import Header from '../components/header';
 import axios from 'axios';
 
 export default class Register extends Component{
-	constructor(){
+	constructor(props){
 		super();
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
 	handleSubmit(event){
+		// event handler when the form is submitted
 		event.preventDefault();
 		let data = new FormData(event.target);
 		let username = JSON.stringify(data.get('username'));

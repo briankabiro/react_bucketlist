@@ -6,9 +6,13 @@ export default class Dashboard extends Component{
 	constructor(props){
 		super();
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.state = {
+			bucketlists: ""
+		}
 	}
 
 	handleSubmit(event){
+		// event handler when the form is submitted
 		event.preventDefault();
 		let data = new FormData(event.target);
 		let name = JSON.stringify(data.get('name'));

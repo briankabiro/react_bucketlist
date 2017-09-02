@@ -9,6 +9,7 @@ export default class Login extends Component{
 	}
 
 	handleSubmit(event){
+		// event handler when the form is submitted
 		event.preventDefault();
 		let data = new FormData(event.target);
 		let username = JSON.stringify(data.get('username'));
