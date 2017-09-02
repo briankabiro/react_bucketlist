@@ -10,6 +10,9 @@ export default class Dashboard extends Component{
 				<button type="submit">Add Item</button>
 			</form>
 			<h3>Items</h3>
+			<div>
+				{{ items }}
+			</div>
 		</div>
 	}
 }
