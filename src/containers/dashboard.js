@@ -25,14 +25,36 @@ export default class Dashboard extends Component{
 			console.error("return err", err)
 		})
 	}
+
+	componentWillMount(){
+		// get the bucketlists
+		axios.get('http://localhost:5000/bucketlists/', {
+			
+		}).then((data) => {
+			console.log('these are bucketlists', data)
+			this.setState({
+				bucketlists: data
+			})
+		}).catch((err) => {
+			console.error("Return Error", err)
+		})
+	}
+
 	render(){
-		<div>
-			<Header />
-			<form onSubmit={this.handleSubmit}>
-				<input type="text" name="name" placeholder="Add name of the bucketlist"/>
-				<button type="submit">Create</button>
-			</form>
-			<h3>Your Bucketlists</h3>
-		</div>
+		let {bucketlists} = this.state.bucketlists
+		return(
+			<div>
+				<Header />
+				<form onSubmit={this.handleSubmit}>
+					<input type="text" name="name" placeholder="Add name of the bucketlist"/>
+					<button type="submit">Create</button>
+				</form>
+				<h3>Your Bucketlists</h3>
+					<p>{{ bucketlists }}</p>
+				<div>
+					<p>Jessica Hunter</p>
+				</div>
+			</div>
+		)
 	}
 }
