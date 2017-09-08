@@ -1,59 +1,75 @@
 import React, {Component} from 'react'
 import Header from '../components/header'
 import axios from 'axios'
+import { Form } from 'react-bootstrap';
+
 
 export default class Dashboard extends Component{
 	constructor(props){
 		super();
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.get_bucketlists = this.get_bucketlists.bind(this)
 		this.state = {
-			bucketlists: ""
+			bucketlists: []
 		}
+	}
+
+	get_bucketlists(){
+		axios.get('http://localhost:5000/bucketlists/', {
+			headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}
+		}).then((data) => {
+			this.setState({
+				bucketlists: data.data
+			})
+		}).catch((err) => {
+			console.error("Return Error", err)
+		})	
 	}
 
 	handleSubmit(event){
 		// event handler when the form is submitted
 		event.preventDefault();
 		let data = new FormData(event.target);
-		let name = JSON.stringify(data.get('name'));
-		
-		axios.post('http://localhost:5000/bucketlists/', {
-			name:name
+		let name = data.get('name');
+
+		axios({
+			'url':'http://localhost:5000/bucketlists/',
+			method:'post',
+			data: {
+				name: name
+			},
+			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
 		}).then((data) => {
-			console.log('this is data', data)
+			this.get_bucketlists()
 		}).catch((err) => {
 			console.error("return err", err)
 		})
 	}
 
-	componentWillMount(){
+	componentDidMount(){
 		// get the bucketlists
-		axios.get('http://localhost:5000/bucketlists/', {
-			
-		}).then((data) => {
-			console.log('these are bucketlists', data)
-			this.setState({
-				bucketlists: data
-			})
-		}).catch((err) => {
-			console.error("Return Error", err)
-		})
+		this.get_bucketlists()
 	}
 
 	render(){
-		let {bucketlists} = this.state.bucketlists
+		let bucketlists = this.state.bucketlists
 		return(
 			<div>
 				<Header />
-				<form onSubmit={this.handleSubmit}>
-					<input type="text" name="name" placeholder="Add name of the bucketlist"/>
+
+				<Form onSubmit={this.handleSubmit}>
+					<input type="text" name="name" placeholder="Add name of the bucketlist" required/>
 					<button type="submit">Create</button>
-				</form>
+				</Form>
+
 				<h3>Your Bucketlists</h3>
-					<p>{{ bucketlists }}</p>
-				<div>
-					<p>Jessica Hunter</p>
-				</div>
+					<div>
+						{bucketlists.map(function(bucketlist){
+							return(
+								<p key={bucketlist.id}>{bucketlist.name}</p>
+							)
+						})}
+					</div>
 			</div>
 		)
 	}
