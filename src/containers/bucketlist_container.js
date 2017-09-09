@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Header from '../components/header';
 
-export default class Dashboard extends Component{
+export default class ItemDashboard extends Component{
 	render(){
 		<div>
 			<Header />
@@ -11,7 +11,7 @@ export default class Dashboard extends Component{
 			</form>
 			<h3>Items</h3>
 			<div>
-				{{ items }}
+				{ items }
 			</div>
 		</div>
 	}
