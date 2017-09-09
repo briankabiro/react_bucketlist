@@ -33,9 +33,9 @@ export default class Login extends Component{
 			localStorage.setItem('token', response.data.token)
 		}).catch((err) => {
 			if (err.response) {
-				// flash the err.message
-				console.log(err.response.status)
-				console.log(err.response.data)
+				this.setState({
+					error: err.response.data.message
+				})
 			}else{
 				console.error("returns error", err)				
 			}		
