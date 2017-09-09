@@ -15,11 +15,12 @@ export default class Dashboard extends Component{
 	}
 
 	get_bucketlists(){
+		// returns the bucketlists that belong to a user
 		axios.get('http://localhost:5000/bucketlists/', {
 			headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}
-		}).then((data) => {
+		}).then((response) => {
 			this.setState({
-				bucketlists: data.data
+				bucketlists: response.data
 			})
 		}).catch((err) => {
 			console.error("Return Error", err)
@@ -39,7 +40,7 @@ export default class Dashboard extends Component{
 				name: name
 			},
 			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
-		}).then((data) => {
+		}).then(() => {
 			this.get_bucketlists()
 		}).catch((err) => {
 			console.error("return err", err)
