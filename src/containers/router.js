@@ -9,7 +9,8 @@ import {
 import Home from './home'
 import Register from './register_container';
 import Login from './login_container';
-import Dashboard from './dashboard'
+import Dashboard from './dashboard';
+import PrivateRoute from './private';
 
 export default () => (
 	<Router>
@@ -23,7 +24,7 @@ export default () => (
 			<Route exact path="/" component={Home}/>
 			<Route path="/register" component={Register}/>
 			<Route path="/login" component={Login}/>
-			<Route path="/dashboard" component={Dashboard}/>
+			<PrivateRoute path="/dashboard" component={Dashboard}/>
 		</div>
 	</Router>
 )
