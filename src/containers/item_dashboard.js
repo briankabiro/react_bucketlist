@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Header from '../components/header';
 
 export default class ItemDashboard extends Component{
+	
 	render(){
 		<div>
 			<Header />
