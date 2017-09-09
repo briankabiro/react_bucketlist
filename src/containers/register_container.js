@@ -1,19 +1,24 @@
 import React, {Component} from 'react';
 import Header from '../components/header';
 import axios from 'axios';
+import '../styles/register.css'
 
 export default class Register extends Component{
 	constructor(props){
 		super();
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.state = {
+			error: ""
+		}
 	}
 
 	handleSubmit(event){
 		// event handler when the form is submitted
 		event.preventDefault();
 		let data = new FormData(event.target);
-		let username = JSON.stringify(data.get('username'));
-		let password = JSON.stringify(data.get("password"));
+
+		let username = data.get('username');
+		let password = data.get("password");
 		
 		axios.post('http://localhost:5000/auth/register', {
 			username: username,
@@ -21,13 +26,17 @@ export default class Register extends Component{
 		}).then((data) => {
 			console.log('this is data', data)
 		}).catch((err) => {
-			console.error("returns error", err)
+			if (err.response){
+				this.setState({
+					error: err.response.data.message
+				})
+			}
 		})
 	}
 
 	render(){
 		return (
-			<div>
+			<div className='container'>
 				<Header />
 				<div>
 					<h4>Register</h4>
@@ -39,6 +48,7 @@ export default class Register extends Component{
 						<button type='submit'>Register</button>
 					</form>
 					<p>Have an account? Login here</p>
+					<p>{this.state.error}</p>
 				</div>
 			</div>
 		)

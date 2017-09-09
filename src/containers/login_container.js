@@ -1,36 +1,39 @@
 import React, {Component} from 'react';
-import Header from '../components/header';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+import Header from '../components/header';
+import LoginForm from '../components/login_form';
+import '../styles/register.css';
 
 export default class Login extends Component{
 	constructor(props){
 		super()
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.state = {
+			redirect: false,
+			error: ""
+		}
 	}
 
 	handleSubmit(event){
 		// event handler when the form is submitted
 		event.preventDefault();
 		let data = new FormData(event.target);
-		let username = JSON.stringify(data.get('username'));
-		let password = JSON.stringify(data.get("password"));
+		let username = data.get('username');
+		let password = data.get("password");
+		console.log(username, password)
 		
 		axios.post('http://localhost:5000/auth/login', {
 			username: username,
 			password: password
 		}).then((response) => {
-			console.log('this is data', response)
-			console.log(response.data.token)
-			console.log(response.status)
-			axios.get('http://localhost:5000/bucketlists/', {
-				headers:{
-					'Authorization': "Bearer " + response.data.token
-				},
-			}).then((data) => {
-				console.log('bucketlist data', data)
+			this.setState({
+				redirect: true
 			})
+			localStorage.setItem('token', response.data.token)
 		}).catch((err) => {
 			if (err.response) {
+				// flash the err.message
 				console.log(err.response.status)
 				console.log(err.response.data)
 			}else{
@@ -40,20 +43,20 @@ export default class Login extends Component{
 	}
 
 	render(){
+		const { redirect } = this.state
+
+		if (redirect) {
+			return <Redirect to='/dashboard' />
+		}
 		return (
 			<div>
 				<Header />
 				<div>
 					<h4>Login</h4>
-					<form onSubmit={this.handleSubmit}>
-						<label>Username</label>
-						<input type="text" name = "username" placeholder="Username"/>
-						<label>Password</label>
-						<input type="password" name = "password" placeholder="Password"/>
-						<button type='submit'>Login</button>
-					</form>
+					<LoginForm handleSubmit = {this.handleSubmit} />
 					<p>Don't have an account? Sign Up Here</p>
 				</div>
+				<p>{this.state.error}</p>
 			</div>
 		)
 	}
