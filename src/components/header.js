@@ -1,13 +1,18 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import '../styles/header.css'
+import { Link } from 'react-router-dom';
+import { Navbar, NavItem, Nav } from 'react-bootstrap'
 
 export default () => (
-	<div className="header">
-		<p>bucketlist</p>
-		<div className="links-div">
-			<Link to="/login">Login</Link>
-			<Link to="/register">Register</Link>
-		</div>
-	</div>
+	  <Navbar>
+	    <Navbar.Header>
+	      <Navbar.Brand>
+	        <Link to="/">bucketlist</Link>
+	      </Navbar.Brand>
+	    </Navbar.Header>
+
+	    <Nav pullRight>
+	      <NavItem><Link to="/login">Login</Link></NavItem>
+	      <NavItem><Link to="/register">Register</Link></NavItem>
+	    </Nav>
+	   </Navbar>
 )

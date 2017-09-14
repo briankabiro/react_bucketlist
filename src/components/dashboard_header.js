@@ -1,8 +1,17 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
+import { Navbar, NavItem, Nav } from 'react-bootstrap'
 
 export default () => (
-	<div>
-		<h2>bucketlist</h2>
-		<p>Hello, lee</p>
-	</div>
+	<Navbar>
+	    <Navbar.Header>
+	      <Navbar.Brand>
+	        <Link to="/bucketlists">bucketlist</Link>
+	      </Navbar.Brand>
+	    </Navbar.Header>
+
+	    <Nav pullRight>
+	      <NavItem>Hello</NavItem>
+	    </Nav>
+	</Navbar>
 )
