@@ -1,0 +1,20 @@
+.add-bucketlist-form{
+	display: flex;
+	justify-content: center;
+}
+
+.add-bucketlist-form input{
+	margin-right: 1em;
+	border-radius:5px;
+	border:1px solid grey;
+}
+
+.add-bucketlist-form button{
+	/* change background color of button */
+	border:none;
+	border-radius:5px;
+}
+
+.add-bucketlist-form * {
+	padding:0.5em;
+}
