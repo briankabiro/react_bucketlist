@@ -3,6 +3,9 @@ import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { Form, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import Header from '../components/dashboard_header';
+import AddItemForm from '../components/add_item';
+import '../styles/item_dashboard.css';
+
 const apiUrl = 'http://localhost:5000/bucketlists/';
 
 export default class ItemDashboard extends Component{
@@ -71,10 +74,7 @@ export default class ItemDashboard extends Component{
 		return(
 			<div>
 				<Header />
-				<Form onSubmit={this.handleSubmit}>
-					<input type="text" name="item_name" placeholder="Add name of the item" required/>
-					<button type="submit">Add Item</button>
-				</Form>
+				<AddItemForm handleSubmit={this.handleSubmit} />
 				<p>{ error }</p>
 				<h3>Items</h3>
 				<div>
