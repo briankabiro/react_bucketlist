@@ -94,10 +94,12 @@ export default class Dashboard extends Component{
 		})	
 	}
 
-	toggleUpdateModal(){
+	toggleUpdateModal(id){
 		console.log('toggling...')
+		console.log('this is id', id)
 		this.setState({
-			showModal: !this.state.showModal
+			showModal: !this.state.showModal,
+			selectedBucketlist: id
 		})
 	}
 
@@ -112,6 +114,7 @@ export default class Dashboard extends Component{
 		let toggleUpdateModal = this.toggleUpdateModal
 		let {showModal} = this.state
 		let updateTitle = this.updateTitle
+		let selectedBucketlist = this.state.selectedBucketlist
 		
 		if (this.state.redirect){
 			return (<Redirect to="/login" />)
@@ -134,11 +137,11 @@ export default class Dashboard extends Component{
 										{bucketlist.name}
 											<div className="pull-right">
 												<Link to={`/bucketlists/${bucketlist.id}`}><Button>View</Button></Link>
-												<Button onClick={toggleUpdateModal}>Edit</Button>
+												<Button onClick={toggleUpdateModal.bind(this, bucketlist.id)}>Edit</Button>
 												<Button onClick = {deleteBucketlist.bind(this, bucketlist.id)} bsStyle="danger">Delete</Button>
 											</div>
 											<div>
-												<UpdateModal key={bucketlist.id} showModal={showModal} id = {bucketlist.id} updateTitle={updateTitle} toggle={toggleUpdateModal} />
+												<UpdateModal showModal={showModal} id = {selectedBucketlist} updateTitle={updateTitle} toggle={toggleUpdateModal} />
 											</div>
 											</ListGroupItem>
 									</ListGroup>
