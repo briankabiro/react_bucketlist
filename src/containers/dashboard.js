@@ -1,30 +1,56 @@
 import React, {Component} from 'react'
-import Header from '../components/header'
 import axios from 'axios'
-import { Form } from 'react-bootstrap';
+import { Link, Redirect } from 'react-router-dom'
+import { Form, Button, Row, ListGroup, ListGroupItem, Col } from 'react-bootstrap';
+import Header from '../components/dashboard_header';
+import UpdateModal from '../components/update_bucketlist';
+import AddBucketlist from '../components/add_bucketlist';
 
+const apiUrl = 'http://localhost:5000/bucketlists/'
 
 export default class Dashboard extends Component{
 	constructor(props){
 		super();
-		this.handleSubmit = this.handleSubmit.bind(this)
-		this.get_bucketlists = this.get_bucketlists.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.updateTitle = this.updateTitle.bind(this);
+		this.get_bucketlists = this.get_bucketlists.bind(this);
+		this.deleteBucketlist = this.deleteBucketlist.bind(this);
+		this.toggleUpdateModal = this.toggleUpdateModal.bind(this);
 		this.state = {
-			bucketlists: []
+			bucketlists: [],
+			showModal: false,
+			redirect: false
 		}
 	}
 
 	get_bucketlists(){
 		// returns the bucketlists that belong to a user
-		axios.get('http://localhost:5000/bucketlists/', {
+		axios.get(apiUrl, {
 			headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}
 		}).then((response) => {
 			this.setState({
 				bucketlists: response.data
 			})
 		}).catch((err) => {
+			if (err.response){
+				this.setState({
+					redirect: true
+				})
+			}
 			console.error("Return Error", err)
 		})	
+	}
+
+	deleteBucketlist(id){
+		axios({
+			'url':apiUrl + id,
+			method:'delete',
+			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
+		}).then(() => {
+			this.get_bucketlists()
+		}).catch((err) => {
+			console.error("return err", err)
+		})		
 	}
 
 	handleSubmit(event){
@@ -34,7 +60,7 @@ export default class Dashboard extends Component{
 		let name = data.get('name');
 
 		axios({
-			'url':'http://localhost:5000/bucketlists/',
+			'url':apiUrl,
 			method:'post',
 			data: {
 				name: name
@@ -47,6 +73,34 @@ export default class Dashboard extends Component{
 		})
 	}
 
+	updateTitle(event, id){
+		console.log("updating...")
+		console.log('id', id)
+		event.preventDefault();
+		let data = new FormData(event.target);
+		let new_name = data.get('name');
+		axios({
+			'url':'http://localhost:5000/bucketlists/'+id,
+			method:'put',
+			data: {
+				name: new_name
+			},
+			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
+		}).then(() => {
+			this.toggleUpdateModal()
+			this.get_bucketlists()
+		}).catch((err) => {
+			console.error("return err", err)
+		})	
+	}
+
+	toggleUpdateModal(){
+		console.log('toggling...')
+		this.setState({
+			showModal: !this.state.showModal
+		})
+	}
+
 	componentDidMount(){
 		// get the bucketlists
 		this.get_bucketlists()
@@ -54,23 +108,44 @@ export default class Dashboard extends Component{
 
 	render(){
 		let bucketlists = this.state.bucketlists
+		let deleteBucketlist = this.deleteBucketlist
+		let toggleUpdateModal = this.toggleUpdateModal
+		let {showModal} = this.state
+		let updateTitle = this.updateTitle
+		
+		if (this.state.redirect){
+			return (<Redirect to="/login" />)
+		}
+		
+		console.log(bucketlists)
 		return(
 			<div>
 				<Header />
-
-				<Form onSubmit={this.handleSubmit}>
-					<input type="text" name="name" placeholder="Add name of the bucketlist" required/>
-					<button type="submit">Create</button>
-				</Form>
-
-				<h3>Your Bucketlists</h3>
-					<div>
-						{bucketlists.map(function(bucketlist){
-							return(
-								<p key={bucketlist.id}>{bucketlist.name}</p>
-							)
-						})}
-					</div>
+				<Row md={6} mdPush={3}>
+					<AddBucketlist handleSubmit={this.handleSubmit}/>
+				</Row>
+				<h3 className="text-center">Your Bucketlists</h3>
+					<Col md={6} mdPush={3}>
+						<div>
+							{bucketlists.map(function(bucketlist){
+								return(
+									<ListGroup key={bucketlist.id}>
+										<ListGroupItem className="clearfix">
+										{bucketlist.name}
+											<div className="pull-right">
+												<Link to={`/bucketlists/${bucketlist.id}`}><Button>View</Button></Link>
+												<Button onClick={toggleUpdateModal}>Edit</Button>
+												<Button onClick = {deleteBucketlist.bind(this, bucketlist.id)} bsStyle="danger">Delete</Button>
+											</div>
+											<div>
+												<UpdateModal key={bucketlist.id} showModal={showModal} id = {bucketlist.id} updateTitle={updateTitle} toggle={toggleUpdateModal} />
+											</div>
+											</ListGroupItem>
+									</ListGroup>
+								)
+							})}
+						</div>
+					</Col>
 			</div>
 		)
 	}
