@@ -13,6 +13,7 @@ export default class ItemDashboard extends Component{
 		super(props);
 		this.get_items = this.get_items.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.deleteItem = this.deleteItem.bind(this)
 		this.state = {
 			items : [],
 			error: "",
@@ -40,6 +41,19 @@ export default class ItemDashboard extends Component{
 		})
 	}
 
+	deleteItem(item_id){
+		let id = this.props.match.params.id;
+		axios({
+			'url':apiUrl + id + "/items/" + item_id,
+			method:'delete',
+			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
+		}).then(() => {
+			this.get_items()
+		}).catch((err) => {
+			console.error("return err", err)
+		})		
+	}
+
 	get_items(){
 		let id = this.props.match.params.id
 		axios.get(apiUrl + id, {
@@ -56,6 +70,13 @@ export default class ItemDashboard extends Component{
 			}
 			console.error("Return Error", err)
 		})	
+	}
+
+	toggleUpdateModal(){
+		console.log('toggling...')
+		this.setState({
+			showModal: !this.state.showModal
+		})
 	}
 
 	componentDidMount(){
