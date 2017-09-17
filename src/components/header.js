@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { Navbar, NavItem, Nav } from 'react-bootstrap'
+import { Navbar, Nav, NavItem } from 'react-bootstrap'
 
 export default () => (
 	  <Navbar>

@@ -21,7 +21,6 @@ export default class Login extends Component{
 		let data = new FormData(event.target);
 		let username = data.get('username');
 		let password = data.get("password");
-		console.log(username, password)
 		
 		axios.post('http://localhost:5000/auth/login', {
 			username: username,
