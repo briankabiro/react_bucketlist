@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
-import Header from '../components/header';
 import axios from 'axios';
-import '../styles/register.css'
+import { Col } from 'react-bootstrap'
+import Header from '../components/header';
+import RegisterForm from '../components/register_form';
 
 export default class Register extends Component{
 	constructor(props){
 		super();
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.state = {
-			error: ""
+			error: "",
+			message:""
 		}
 	}
 
@@ -36,20 +38,14 @@ export default class Register extends Component{
 
 	render(){
 		return (
-			<div className='container'>
+			<div>
 				<Header />
-				<div>
-					<h4>Register</h4>
-					<form onSubmit={this.handleSubmit}>
-						<label>Username</label>
-						<input type="text" name="username" placeholder="Username"/>
-						<label>Password</label>
-						<input type="password"  name="password" placeholder="Password"/>
-						<button type='submit'>Register</button>
-					</form>
-					<p>Have an account? Login here</p>
+				<Col md = {5} mdPush={3} >
+					<h4 className="text-center">Register</h4>
+					{this.state.message}
+					<RegisterForm />
 					<p>{this.state.error}</p>
-				</div>
+				</Col>
 			</div>
 		)
 	}

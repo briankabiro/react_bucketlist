@@ -3,17 +3,40 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/header';
 import LoginForm from '../components/login_form';
+import { Col, Alert } from 'react-bootstrap'
 import '../styles/register.css';
 
 export default class Login extends Component{
 	constructor(props){
 		super()
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.hideAlert = this.hideAlert.bind(this)
 		this.state = {
 			redirect: false,
-			error: ""
+			error: "",
+			alert:null
 		}
 	}
+
+	hideAlert(){
+		this.setState({
+			alert: null
+		})
+	}
+
+	alertError(){
+		let error = this.state.error
+		const showAlert = () => (
+			<Alert bsStyle="danger" onDismiss={this.hideAlert()}>
+				<p>{error}</p>
+			</Alert>
+
+		);
+		this.setState({
+			alert: showAlert()
+		})
+	}
+
 
 	handleSubmit(event){
 		// event handler when the form is submitted
@@ -35,6 +58,7 @@ export default class Login extends Component{
 				this.setState({
 					error: err.response.data.message
 				})
+				this.alertError()
 			}else{
 				console.error("returns error", err)				
 			}		
@@ -55,7 +79,10 @@ export default class Login extends Component{
 					<LoginForm handleSubmit = {this.handleSubmit} />
 					<p>Don't have an account? Sign Up Here</p>
 				</div>
-				<p>{this.state.error}</p>
+		        <p>{this.state.error}</p>
+		        <Col md={1} mdPush={3}>
+		        	{this.state.alert}
+		        </Col>
 			</div>
 		)
 	}
