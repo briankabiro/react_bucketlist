@@ -61,16 +61,35 @@ export default class ItemDashboard extends Component{
 	}
 
 	render(){
-		<div>
-			<Header />
-			<form>
-				<input type="text" placeholder="Add Item"/>
-				<button type="submit">Add Item</button>
-			</form>
-			<h3>Items</h3>
+		const {items} =  this.state
+		const error = this.state.error
+		const {redirect} = this.state
+		
+		if (redirect){
+			return (<Redirect to="/x" />)
+		}
+		return(
 			<div>
-				{ items }
+				<Header />
+				<Form onSubmit={this.handleSubmit}>
+					<input type="text" name="item_name" placeholder="Add name of the item" required/>
+					<button type="submit">Add Item</button>
+				</Form>
+				<p>{ error }</p>
+				<h3>Items</h3>
+				<div>
+					{items.map(function(item){
+						return(
+							<div key={item.id}>
+								<ToggleButtonGroup type="checkbox">
+									<ToggleButton value={item.id}>{item.description}</ToggleButton>
+								</ToggleButtonGroup>
+							</div>
+						)
+					})}
+				</div>
+
 			</div>
-		</div>
+		)
 	}
 }
