@@ -25,8 +25,10 @@ export default class Register extends Component{
 		axios.post('http://localhost:5000/auth/register', {
 			username: username,
 			password: password	
-		}).then((data) => {
-			console.log('this is data', data)
+		}).then((response) => {
+			this.setState({
+				message: response.data.message
+			})
 		}).catch((err) => {
 			if (err.response){
 				this.setState({

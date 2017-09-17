@@ -49,10 +49,13 @@ export default class Login extends Component{
 			username: username,
 			password: password
 		}).then((response) => {
-			this.setState({
-				redirect: true
-			})
 			localStorage.setItem('token', response.data.token)
+			
+			if (localStorage.getItem('token')){
+				this.setState({
+					redirect: true
+				})				
+			}
 		}).catch((err) => {
 			if (err.response) {
 				this.setState({
