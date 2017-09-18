@@ -19,7 +19,8 @@ export default class Dashboard extends Component{
 		this.state = {
 			bucketlists: [],
 			showModal: false,
-			redirect: false
+			redirect: false,
+			selectedBucketlist:null
 		}
 	}
 
@@ -124,9 +125,8 @@ export default class Dashboard extends Component{
 		return(
 			<div>
 				<Header />
-				<Row md={6} mdPush={3}>
-					<AddBucketlist handleSubmit={this.handleSubmit}/>
-				</Row>
+				<AddBucketlist handleSubmit={this.handleSubmit}/>
+				
 				<h3 className="text-center">Your Bucketlists</h3>
 					<Col md={6} mdPush={3}>
 						<div>

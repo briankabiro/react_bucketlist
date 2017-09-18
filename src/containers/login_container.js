@@ -44,18 +44,16 @@ export default class Login extends Component{
 		let data = new FormData(event.target);
 		let username = data.get('username');
 		let password = data.get("password");
-		
+
 		axios.post('http://localhost:5000/auth/login', {
 			username: username,
 			password: password
 		}).then((response) => {
 			localStorage.setItem('token', response.data.token)
-			
-			if (localStorage.getItem('token')){
-				this.setState({
-					redirect: true
-				})				
-			}
+		}).then(() => {
+			this.setState({
+				redirect: true
+			})
 		}).catch((err) => {
 			if (err.response) {
 				this.setState({
@@ -72,14 +70,17 @@ export default class Login extends Component{
 		const { redirect } = this.state
 
 		if (redirect) {
-			return <Redirect to='/dashboard' />
+			return <Redirect to='/bucketlists' />
 		}
+
 		return (
 			<div>
 				<Header />
 				<div>
-					<h4>Login</h4>
-					<LoginForm handleSubmit = {this.handleSubmit} />
+					<h4 className="text-center">Login</h4>
+					<Col md = {5} mdPush={3}>
+						<LoginForm handleSubmit = {this.handleSubmit} />
+					</Col>
 					<p>Don't have an account? Sign Up Here</p>
 				</div>
 		        <p>{this.state.error}</p>

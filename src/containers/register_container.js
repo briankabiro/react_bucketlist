@@ -45,7 +45,7 @@ export default class Register extends Component{
 				<Col md = {5} mdPush={3} >
 					<h4 className="text-center">Register</h4>
 					{this.state.message}
-					<RegisterForm />
+					<RegisterForm handleSubmit={this.handleSubmit} />
 					<p>{this.state.error}</p>
 				</Col>
 			</div>
