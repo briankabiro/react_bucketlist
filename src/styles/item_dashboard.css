@@ -1,0 +1,12 @@
+.add-item-form{
+	display: flex;
+	justify-content:center;
+}
+.add-item-form input{
+	margin-right: 1em;
+}
+.items-div{
+	display: flex;
+	flex-flow:column nowrap;
+	align-items: center;
+}
