@@ -74,6 +74,32 @@ export default class Dashboard extends Component{
 		})
 	}
 
+	onSearch(event){
+		event.preventDefault();
+		let data = new FormData(event.target);
+		let q = data.get('search');
+		let searchUrl = apiUrl + "?q=";
+
+		axios({
+			'url':searchUrl + q,
+			method:'get',
+			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
+		}).then((response) => {
+				this.setState({
+					bucketlists: response.data,
+					searchMessage:null
+				})
+		}).catch((err) => {
+			if (err.response){
+				this.setState({
+					searchMessage:"You don't have a bucketlist with that name",
+					bucketlists:[]
+				})
+			}
+			console.error("return err", err)
+		})
+	}
+
 	updateTitle(event, id){
 		console.log("updating...")
 		console.log('id', id)
