@@ -88,7 +88,8 @@ export default class ItemDashboard extends Component{
 		const {items} =  this.state
 		const error = this.state.error
 		const {redirect} = this.state
-		
+		const deleteItem = this.deleteItem
+		const toggleUpdateModal = this.toggleUpdateModal
 		if (redirect){
 			return (<Redirect to="/x" />)
 		}
@@ -101,11 +102,14 @@ export default class ItemDashboard extends Component{
 				<div>
 					{items.map(function(item){
 						return(
-							<div key={item.id}>
-								<ToggleButtonGroup type="checkbox">
-									<ToggleButton value={item.id}>{item.description}</ToggleButton>
-								</ToggleButtonGroup>
-							</div>
+							<ListGroup key={item.id}>
+								<ListGroupItem>
+									<input type="checkbox"/>
+									<span>{item.description}</span>
+										<Button onClick={toggleUpdateModal}>Edit</Button>
+										<Button onClick = {deleteItem.bind(this, item.id)} bsStyle="danger">Delete</Button>
+								</ListGroupItem>
+							</ListGroup>
 						)
 					})}
 				</div>
