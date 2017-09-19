@@ -14,10 +14,15 @@ export default class ItemDashboard extends Component{
 		this.get_items = this.get_items.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.deleteItem = this.deleteItem.bind(this)
+		this.updateItemName = this.updateItemName.bind(this)
+		this.toggleUpdateModal = this.toggleUpdateModal.bind(this)
+		this.updateStatus = this.updateStatus.bind(this)
 		this.state = {
 			items : [],
 			error: "",
-			redirect: false
+			redirect: false,
+			selectedItem: null,
+			showModal: false
 		}
 	}
 
@@ -69,13 +74,55 @@ export default class ItemDashboard extends Component{
 				})
 			}
 			console.error("Return Error", err)
-		})	
+		})
 	}
 
-	toggleUpdateModal(){
+	toggleUpdateModal(item_id){
 		console.log('toggling...')
 		this.setState({
-			showModal: !this.state.showModal
+			showModal: !this.state.showModal,
+			selectedItem: item_id
+		})
+	}
+
+	updateStatus(item_id, status){
+		console.log(status)
+		let id = this.props.match.params.id;
+		axios({
+			'url':apiUrl + id + "/items/" + item_id,
+			method:'put',
+			data: {
+				done: JSON.stringify(!status)
+			},
+			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
+		}).then(() => {
+			this.get_items()
+		}).catch((err) => {
+			console.error("return err", err)
+			if (err.response){
+				console.log(err.response.data)
+			}
+		})
+	}
+
+	updateItemName(event, item_id){
+		console.log("updating...")
+		let id = this.props.match.params.id;
+		event.preventDefault();
+		let data = new FormData(event.target);
+		let new_name = data.get('name');
+		axios({
+			'url':apiUrl + id + "/items/" + item_id,
+			method:'put',
+			data: {
+				description: new_name
+			},
+			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
+		}).then(() => {
+			this.toggleUpdateModal()
+			this.get_items()
+		}).catch((err) => {
+			console.error("return err", err)
 		})
 	}
 
