@@ -6,7 +6,7 @@ import Header from '../components/dashboard_header';
 import UpdateModal from '../components/update_bucketlist';
 import AddBucketlist from '../components/add_bucketlist';
 
-const apiUrl = 'http://localhost:5000/bucketlists/'
+const apiUrl = 'http://localhost:5000/bucketlists/';
 
 export default class Dashboard extends Component{
 	constructor(props){
@@ -51,7 +51,7 @@ export default class Dashboard extends Component{
 			this.get_bucketlists()
 		}).catch((err) => {
 			console.error("return err", err)
-		})		
+		})
 	}
 
 	handleSubmit(event){
@@ -93,7 +93,6 @@ export default class Dashboard extends Component{
 			if (err.response){
 				this.setState({
 					searchMessage:"You don't have a bucketlist with that name",
-					bucketlists:[]
 				})
 			}
 			console.error("return err", err)

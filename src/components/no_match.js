@@ -13,7 +13,7 @@ export default () => (
             <Link to="/">
 	            <Button className="btn-primary">
 	            	Take Me Home
-	            </Button>  
+	            </Button>
             </Link>
         </div>
     </Jumbotron>

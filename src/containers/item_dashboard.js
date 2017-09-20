@@ -56,7 +56,7 @@ export default class ItemDashboard extends Component{
 			this.get_items()
 		}).catch((err) => {
 			console.error("return err", err)
-		})		
+		})
 	}
 
 	get_items(){
