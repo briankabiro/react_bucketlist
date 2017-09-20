@@ -2,11 +2,42 @@
 	display: flex;
 	justify-content:center;
 }
+
 .add-item-form input{
 	margin-right: 1em;
 }
-.items-div{
+
+.list-items{
 	display: flex;
-	flex-flow:column nowrap;
+	flex-flow: row wrap;
 	align-items: center;
+}
+
+.item{
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-around;
+	border:1px solid grey;
+	border-radius:1em;
+	width:20em;
+	padding:1em;
+	margin:1em;
+}
+.item-left{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.item-right{
+	display: flex;
+	justify-content: space-around;
+}
+
+.item-left span{
+		margin-left:0.5em;
+}
+
+.item-right Button{
+	margin:0.5em;
 }
