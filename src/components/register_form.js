@@ -1,33 +1,17 @@
-import React from 'react'
-import {FormControl, FormGroup, Col, ControlLabel, Form, Button} from 'react-bootstrap'
+import React from 'react';
+import {FormGroup, Input, Label, Form, Button} from 'reactstrap';
 
 export default (props) => (
-	<Form horizontal onSubmit={props.handleSubmit}>
+	<Form onSubmit={props.handleSubmit}>
+		<FormGroup>
+			<Label for="username">Username</Label>
+			<Input type="text" name = "username" placeholder="Username" required id="username" />
+		</FormGroup>
 
-		<FormGroup controlId="formHorizontalUsername">
-			<Col componentClass={ControlLabel} sm={2}>
-			 	Username
-			</Col>
-		  	<Col sm={10}>
-		    	<FormControl type="text" name = "username" placeholder="Username" required/>
-			</Col>
+		<FormGroup>
+			<Label for="password">Password</Label>
+			<Input type="password" name="password" placeholder="Password" required id="password" />
 		</FormGroup>
-		
-		<FormGroup controlId="formHorizontalPassword">
-			<Col componentClass={ControlLabel} sm={2}>
-		    	Password
-		  	</Col>
-			<Col sm={10}>
-				<FormControl type="password" name="password" placeholder="Password" required/>
-			</Col>
-		</FormGroup>
-		
-	    <FormGroup>
-	    	<Col smOffset={2} sm={10}>
-		        <Button type="submit">
-		          Register
-		    	</Button>
-	    	</Col>
-	    </FormGroup>
+		<Button color="primary">Register</Button>
 	</Form>
 )

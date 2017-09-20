@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form} from 'react-bootstrap';
+import {Form} from 'reactstrap';
 import '../styles/item_dashboard.css';
 
 export default (props) => (

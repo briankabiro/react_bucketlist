@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import { Col } from 'react-bootstrap'
+import { Col } from 'reactstrap'
 import Header from '../components/header';
 import RegisterForm from '../components/register_form';
 

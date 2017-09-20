@@ -1,18 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, NavItem } from 'react-bootstrap'
+import { Navbar, NavbarBrand,  Nav , NavItem} from 'reactstrap';
 
 export default () => (
-	  <Navbar>
-	    <Navbar.Header>
-	      <Navbar.Brand>
-	        <Link to="/">bucketlist</Link>
-	      </Navbar.Brand>
-	    </Navbar.Header>
+	<Navbar color="faded" light>
+			<NavbarBrand href="/">bucketlists</NavbarBrand>
+				<Nav className="ml-auto" navbar>
+					<NavItem>
+						<Link to="/login">Login</Link>
+					</NavItem>
 
-	    <Nav pullRight>
-	      <NavItem><Link to="/login">Login</Link></NavItem>
-	      <NavItem><Link to="/register">Register</Link></NavItem>
-	    </Nav>
-	   </Navbar>
+					<NavItem>
+						<Link to="/register">Register</Link>
+					</NavItem>
+				</Nav>
+		</Navbar>
 )

@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
-import axios from 'axios'
-import { Link, Redirect } from 'react-router-dom'
-import { Form, Button, Row, ListGroup, ListGroupItem, Col } from 'react-bootstrap';
+import React, {Component} from 'react';
+import axios from 'axios';
+import { Link, Redirect } from 'react-router-dom';
+import { Button, ListGroup, ListGroupItem} from 'reactstrap';
 import Header from '../components/dashboard_header';
 import UpdateModal from '../components/update_bucketlist';
 import AddBucketlist from '../components/add_bucketlist';

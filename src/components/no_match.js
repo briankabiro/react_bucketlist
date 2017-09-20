@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Jumbotron, Col, Button, Glyphicon } from 'react-bootstrap';
+import { Jumbotron, Button } from 'reactstrap';
 
 export default () => (
     <Jumbotron>
