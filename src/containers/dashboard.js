@@ -75,9 +75,16 @@ export default class Dashboard extends Component{
 			},
 			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
 		}).then(() => {
-			this.get_bucketlists()
+			this.get_bucketlists(this.state.currentPage)
 		}).catch((err) => {
 			console.error("return err", err)
+		})
+	}
+
+	handlePagination(i){
+		this.get_bucketlists(i)
+		this.setState({
+			currentPage:i
 		})
 	}
 
@@ -180,7 +187,11 @@ export default class Dashboard extends Component{
 								)
 							})}
 						</div>
-					</Col>
+					<Row>
+						<Col md={{ size: 3, offset: 6}}>
+							<Pagination onClick={this.handlePagination} pages={this.state.pages} />
+						</Col>
+					</Row>
 			</div>
 		)
 	}
