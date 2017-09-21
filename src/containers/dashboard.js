@@ -48,9 +48,16 @@ export default class Dashboard extends Component{
 			method:'delete',
 			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
 		}).then(() => {
-			this.get_bucketlists()
+			this.get_bucketlists(1)
 		}).catch((err) => {
 			console.error("return err", err)
+		})
+	}
+
+	logout(){
+		localStorage.removeItem('token')
+		this.setState({
+			redirect: true
 		})
 	}
 
