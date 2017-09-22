@@ -173,7 +173,7 @@ export default class Dashboard extends Component{
 		console.log(bucketlists)
 		return(
 			<div>
-				<Header />
+				<Header onSearch={this.onSearch} logout={this.logout}/>
 				<AddBucketlist handleSubmit={this.handleSubmit}/>
 				
 				<h3 className="text-center">Your Bucketlists</h3>

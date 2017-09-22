@@ -46,7 +46,20 @@ export default class ItemDashboard extends Component{
 		}).then(() => {
 			this.get_items()
 		}).catch((err) => {
+
 			console.error("return err", err)
+			if (err.response){
+				this.setState({
+					redirect: true
+				})
+			}
+		})
+	}
+
+	logout(){
+		localStorage.removeItem('token')
+		this.setState({
+			redirect: true
 		})
 	}
 
@@ -145,11 +158,11 @@ export default class ItemDashboard extends Component{
 		let selectedItem = this.state.selectedItem
 		const toggleUpdateModal = this.toggleUpdateModal
 		if (redirect){
-			return (<Redirect to="/x" />)
+			return (<Redirect to="/login" />)
 		}
 		return(
 			<div>
-				<Header />
+				<Header logout={this.logout} />
 				<AddItemForm handleSubmit={this.handleSubmit} />
 				<p>{ error }</p>
 				<h3>Items</h3>
