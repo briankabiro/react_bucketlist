@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Button } from 'reactstrap';
 import { GoPencil } from 'react-icons/lib/go';
 import Header from '../components/dashboard_header';
+import UpdateItem from '../components/update_item';
 import AddItemForm from '../components/add_item';
 import '../styles/item_dashboard.css';
 
@@ -17,7 +18,9 @@ export default class ItemDashboard extends Component{
 		this.deleteItem = this.deleteItem.bind(this)
 		this.updateItemName = this.updateItemName.bind(this)
 		this.toggleUpdateModal = this.toggleUpdateModal.bind(this)
-		this.updateStatus = this.updateStatus.bind(this)
+		this.updateStatus = this.updateStatus.bind(this);
+		this.logout = this.logout.bind(this);
+
 		this.state = {
 			items : [],
 			error: "",
@@ -137,6 +140,9 @@ export default class ItemDashboard extends Component{
 		const error = this.state.error
 		const {redirect} = this.state
 		const deleteItem = this.deleteItem
+		let updateItemName = this.updateItemName
+		let {showModal} = this.state
+		let selectedItem = this.state.selectedItem
 		const toggleUpdateModal = this.toggleUpdateModal
 		if (redirect){
 			return (<Redirect to="/x" />)
