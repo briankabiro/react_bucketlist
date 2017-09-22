@@ -1,10 +1,12 @@
 import React from 'react';
-import {Form} from 'reactstrap';
+import {Form, Input, Col, Button} from 'reactstrap';
 import '../styles/item_dashboard.css';
 
 export default (props) => (
-	<Form className="add-item-form" onSubmit={props.handleSubmit}>
-		<input type="text" name="item_name" placeholder="Add name of the item" required/>
-		<button type="submit">Add Item</button>
-	</Form>
+	<Col md={{ size: 4, offset: 4 }}>
+		<Form className="add-item-form" onSubmit={props.handleSubmit}>
+			<Input type="text" name="item_name" placeholder="Name of the item" required/>
+			<Button color="primary" type="submit">Add Item</Button>
+		</Form>
+	</Col>
 )
