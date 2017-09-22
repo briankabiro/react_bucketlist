@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from 'reactstrap';
+import { GoPencil } from 'react-icons/lib/go';
 import Header from '../components/dashboard_header';
 import AddItemForm from '../components/add_item';
 import '../styles/item_dashboard.css';
@@ -149,18 +150,21 @@ export default class ItemDashboard extends Component{
 				<div>
 					{items.map(function(item){
 						return(
-							<ListGroup key={item.id}>
-								<ListGroupItem>
-									<input type="checkbox"/>
-									<span>{item.description}</span>
-										<Button onClick={toggleUpdateModal}>Edit</Button>
-										<Button onClick = {deleteItem.bind(this, item.id)} bsStyle="danger">Delete</Button>
-								</ListGroupItem>
-							</ListGroup>
+								<div className="item" key={item.id}>
+									<div className="item-left">
+										<Checkbox done={item.done} updateStatus={updateStatus.bind(this, item.id, item.done)} />
+										<span>{item.description}</span>
+									</div>
+
+									<div className="item-right">
+										<Button onClick={toggleUpdateModal.bind(this, item.id)}><GoPencil /></Button>
+										<Button color="danger" onClick = {deleteItem.bind(this, item.id)}>X</Button>
+										<UpdateItem showModal={showModal} id = {selectedItem} updateItemName={updateItemName} toggle={toggleUpdateModal} />
+									</div>
+								</div>
 						)
 					})}
 				</div>
-
 			</div>
 		)
 	}

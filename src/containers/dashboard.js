@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
-import { Button, ListGroup, ListGroupItem} from 'reactstrap';
+import { Button, Row, Col } from 'reactstrap';
+import { GoEye, GoPencil } from 'react-icons/lib/go';
 import Header from '../components/dashboard_header';
 import UpdateModal from '../components/update_bucketlist';
 import AddBucketlist from '../components/add_bucketlist';
@@ -171,19 +172,18 @@ export default class Dashboard extends Component{
 						<div>
 							{bucketlists.map(function(bucketlist){
 								return(
-									<ListGroup key={bucketlist.id}>
-										<ListGroupItem className="clearfix">
-										{bucketlist.name}
-											<div className="pull-right">
-												<Link to={`/bucketlists/${bucketlist.id}`}><Button>View</Button></Link>
-												<Button onClick={toggleUpdateModal.bind(this, bucketlist.id)}>Edit</Button>
-												<Button onClick = {deleteBucketlist.bind(this, bucketlist.id)} bsStyle="danger">Delete</Button>
-											</div>
-											<div>
-												<UpdateModal showModal={showModal} id = {selectedBucketlist} updateTitle={updateTitle} toggle={toggleUpdateModal} />
-											</div>
-											</ListGroupItem>
-									</ListGroup>
+									<div className="bucketlist" key={bucketlist.id}>
+										<div>
+											<h3>{bucketlist.name}</h3>
+										</div>
+
+										<div className="buttons-div">
+											<Link to={`/bucketlists/${bucketlist.id}`}><Button color="success"><GoEye /></Button></Link>
+											<Button onClick={toggleUpdateModal.bind(this, bucketlist.id)}><GoPencil /></Button>
+											<Button color="danger" onClick = {deleteBucketlist.bind(this, bucketlist.id)}>X</Button>
+										</div>
+										<UpdateModal showModal={showModal} id = {selectedBucketlist} updateTitle={updateTitle} toggle={toggleUpdateModal} />
+							</div>
 								)
 							})}
 						</div>
