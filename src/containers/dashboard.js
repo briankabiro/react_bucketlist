@@ -6,7 +6,9 @@ import { GoEye, GoPencil } from 'react-icons/lib/go';
 import Header from '../components/dashboard_header';
 import UpdateModal from '../components/update_bucketlist';
 import AddBucketlist from '../components/add_bucketlist';
+import Pagination from '../components/pagination';
 
+const getApiUrl = 'http://localhost:5000/bucketlists/?page=';
 const apiUrl = 'http://localhost:5000/bucketlists/';
 
 export default class Dashboard extends Component{
@@ -17,21 +19,30 @@ export default class Dashboard extends Component{
 		this.get_bucketlists = this.get_bucketlists.bind(this);
 		this.deleteBucketlist = this.deleteBucketlist.bind(this);
 		this.toggleUpdateModal = this.toggleUpdateModal.bind(this);
+		this.onSearch = this.onSearch.bind(this);
+		this.handlePagination = this.handlePagination.bind(this);
+		this.logout = this.logout.bind(this);
 		this.state = {
 			bucketlists: [],
 			showModal: false,
 			redirect: false,
-			selectedBucketlist:null
+			selectedBucketlist:null,
+			searchMessage:null,
+			pages:null,
+			currentPage:1
 		}
 	}
 
-	get_bucketlists(){
+	get_bucketlists(page){
 		// returns the bucketlists that belong to a user
-		axios.get(apiUrl, {
+		 console.log(this.state.currentPage)
+		axios.get(getApiUrl+page, {
 			headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}
 		}).then((response) => {
 			this.setState({
-				bucketlists: response.data
+				bucketlists: response.data.results,
+				searchMessage:null,
+				pages: response.data.pages
 			})
 		}).catch((err) => {
 			if (err.response){
@@ -40,7 +51,7 @@ export default class Dashboard extends Component{
 				})
 			}
 			console.error("Return Error", err)
-		})	
+		})
 	}
 
 	deleteBucketlist(id){
@@ -129,24 +140,22 @@ export default class Dashboard extends Component{
 			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
 		}).then(() => {
 			this.toggleUpdateModal()
-			this.get_bucketlists()
+			this.get_bucketlists(this.state.currentPage)
 		}).catch((err) => {
 			console.error("return err", err)
-		})	
+		})
 	}
 
 	toggleUpdateModal(id){
-		console.log('toggling...')
-		console.log('this is id', id)
 		this.setState({
 			showModal: !this.state.showModal,
 			selectedBucketlist: id
 		})
 	}
 
-	componentDidMount(){
+	componentWillMount(){
 		// get the bucketlists
-		this.get_bucketlists()
+		this.get_bucketlists(this.state.currentPage)
 	}
 
 	render(){
