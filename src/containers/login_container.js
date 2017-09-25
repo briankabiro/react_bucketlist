@@ -9,8 +9,9 @@ import '../styles/register.css';
 export default class Login extends Component{
 	constructor(props){
 		super()
-		this.handleSubmit = this.handleSubmit.bind(this)
-		this.hideAlert = this.hideAlert.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.onDismiss = this.onDismiss.bind(this);
+		this.onDismissSuccess = this.onDismissSuccess.bind(this)
 		this.state = {
 			redirect: false,
 			error: "",
@@ -18,20 +19,12 @@ export default class Login extends Component{
 		}
 	}
 
-	hideAlert(){
-		this.setState({
-			alert: null
-		})
+	onDismiss(){
+		// event handler when the form is submitted
+		this.setState({ visible: false})
 	}
 
-	alertError(){
-		let error = this.state.error
-		const showAlert = () => (
-			<Alert bsStyle="danger" onDismiss={this.hideAlert()}>
-				<p>{error}</p>
-			</Alert>
-
-		);
+	onDismissSuccess(){
 		this.setState({
 			alert: showAlert()
 		})

@@ -125,9 +125,13 @@ export default class Dashboard extends Component{
 		})
 	}
 
+	toggleDeleteModal = () => {
+		this.setState({
+			showDeleteModal: !this.state.showDeleteModal
+		})
+	}
+
 	updateTitle(event, id){
-		console.log("updating...")
-		console.log('id', id)
 		event.preventDefault();
 		let data = new FormData(event.target);
 		let new_name = data.get('name');
