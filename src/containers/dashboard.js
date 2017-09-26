@@ -5,6 +5,7 @@ import { Button, Row, Col } from 'reactstrap';
 import { GoEye, GoPencil } from 'react-icons/lib/go';
 import Header from '../components/dashboard_header';
 import UpdateModal from '../components/update_bucketlist';
+import DeleteModal from '../components/delete_modal';
 import AddBucketlist from '../components/add_bucketlist';
 import Pagination from '../components/pagination';
 
@@ -25,6 +26,7 @@ export default class Dashboard extends Component{
 		this.state = {
 			bucketlists: [],
 			showModal: false,
+			showDeleteModal:false,
 			redirect: false,
 			selectedBucketlist:null,
 			searchMessage:null,
@@ -54,12 +56,16 @@ export default class Dashboard extends Component{
 		})
 	}
 
-	deleteBucketlist(id){
+	deleteBucketlist(event){
+		event.preventDefault()
+		console.log('deleting...')
+		let id = event.target.id
 		axios({
 			'url':apiUrl + id,
 			method:'delete',
 			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
 		}).then(() => {
+			this.toggleDeleteModal()
 			this.get_bucketlists(1)
 		}).catch((err) => {
 			console.error("return err", err)
@@ -125,11 +131,6 @@ export default class Dashboard extends Component{
 		})
 	}
 
-	toggleDeleteModal = () => {
-		this.setState({
-			showDeleteModal: !this.state.showDeleteModal
-		})
-	}
 
 	updateTitle(event, id){
 		event.preventDefault();
@@ -150,6 +151,13 @@ export default class Dashboard extends Component{
 		})
 	}
 
+	toggleDeleteModal = (id) => {
+		this.setState({
+			showDeleteModal: !this.state.showDeleteModal,
+			selectedBucketlist: id
+		})
+	}
+
 	toggleUpdateModal(id){
 		this.setState({
 			showModal: !this.state.showModal,
@@ -167,9 +175,11 @@ export default class Dashboard extends Component{
 		let deleteBucketlist = this.deleteBucketlist
 		let toggleUpdateModal = this.toggleUpdateModal
 		let {showModal} = this.state
+		let showDeleteModal = this.state.showDeleteModal
 		let updateTitle = this.updateTitle
 		let selectedBucketlist = this.state.selectedBucketlist
-		
+		let toggleDeleteModal = this.toggleDeleteModal
+
 		if (this.state.redirect){
 			return (<Redirect to="/login" />)
 		}
@@ -193,9 +203,10 @@ export default class Dashboard extends Component{
 										<div className="buttons-div">
 											<Link to={`/bucketlists/${bucketlist.id}`}><Button color="success"><GoEye /></Button></Link>
 											<Button onClick={toggleUpdateModal.bind(this, bucketlist.id)}><GoPencil /></Button>
-											<Button color="danger" onClick = {deleteBucketlist.bind(this, bucketlist.id)}>X</Button>
+											<Button color="danger" onClick = {toggleDeleteModal.bind(this, bucketlist.id)}>X</Button>
 										</div>
 										<UpdateModal showModal={showModal} id = {selectedBucketlist} updateTitle={updateTitle} toggle={toggleUpdateModal} />
+										<DeleteModal showDeleteModal={showDeleteModal} deleteBucketlist={() => deleteBucketlist} id={selectedBucketlist} toggle={toggleDeleteModal} />
 							</div>
 								)
 							})}
