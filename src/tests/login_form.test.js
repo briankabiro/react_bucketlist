@@ -22,4 +22,9 @@ describe('<RegisterForm />', () => {
      wrapper.simulate('submit');
      expect(handleSubmit.calledOnce).to.equal(true);
    });
+
+   it('shows an error when no name is entered', () => {
+     wrapper.simulate('submit')
+     console.log()
+   })
 })
