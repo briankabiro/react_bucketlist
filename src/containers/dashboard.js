@@ -112,13 +112,20 @@ export default class Dashboard extends Component{
 		let q = data.get('search');
 		let searchUrl = apiUrl + "?q=";
 
+		if (!q){
+			this.setState({
+				searchMessage:null
+			})
+		}
+
 		axios({
 			'url':searchUrl + q,
 			method:'get',
 			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
 		}).then((response) => {
+			console.log('searched bucketlists', response.data)
 				this.setState({
-					bucketlists: response.data,
+					bucketlists: response.data.results,
 					searchMessage:null
 				})
 		}).catch((err) => {
@@ -183,16 +190,14 @@ export default class Dashboard extends Component{
 		if (this.state.redirect){
 			return (<Redirect to="/login" />)
 		}
-		
-		console.log(bucketlists)
 		return(
 			<div>
 				<Header onSearch={this.onSearch} logout={this.logout}/>
 				<AddBucketlist handleSubmit={this.handleSubmit}/>
-				
+
 				<h3 className="text-center">Your Bucketlists</h3>
-					<Col md={6} mdPush={3}>
-						<div>
+					<p className="text-center">{this.state.searchMessage}</p>
+						<div className="bucketlists">
 							{bucketlists.map(function(bucketlist){
 								return(
 									<div className="bucketlist" key={bucketlist.id}>
