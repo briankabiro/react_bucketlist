@@ -138,7 +138,6 @@ export default class Dashboard extends Component{
 		})
 	}
 
-
 	updateTitle(event, id){
 		event.preventDefault();
 		let data = new FormData(event.target);

@@ -12,6 +12,7 @@ export default (props) => (
 			<Label for="password">Password</Label>
 			<Input type="password" name="password" placeholder="Password" required id="password" />
 		</FormGroup>
+		
 		<Button color="primary">Register</Button>
 	</Form>
 )
