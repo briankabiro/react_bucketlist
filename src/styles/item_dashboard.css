@@ -1,10 +1,22 @@
 .add-item-form{
 	display: flex;
-	justify-content:center;
+	justify-content: center;
+	margin:2em 0 2em 0;
+}
+
+.alert{
+	margin:0.1em 1em 0 1em;
+}
+
+.bucket-name{
+		text-align:center;
+		margin:0.5em;
 }
 
 .add-item-form input{
 	margin-right: 1em;
+	border-radius:5px;
+	border:1px solid grey;
 }
 
 .list-items{
@@ -22,6 +34,7 @@
 	width:20em;
 	padding:1em;
 	margin:1em;
+	box-shadow:0.1em 0.1em 0.1em #888888;
 }
 .item-left{
 	display: flex;
