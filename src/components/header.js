@@ -4,7 +4,7 @@ import { Navbar, NavbarBrand,  Nav , NavItem} from 'reactstrap';
 
 export default () => (
 	<Navbar className="flex-row justify-content-between" color="faded" light>
-			<NavbarBrand href="/">bucketlists</NavbarBrand>
+			<NavbarBrand><Link to = "/">bucketlists</Link></NavbarBrand>
 				<Nav navbar className="flex-row justify-content-around">
 
 					<NavItem className="mr-2">
