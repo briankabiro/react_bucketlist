@@ -31,13 +31,19 @@ export default class Dashboard extends Component{
 			selectedBucketlist:null,
 			searchMessage:null,
 			pages:null,
-			currentPage:1
+			currentPage:1,
+			visible: false
 		}
+	}
+
+	onDismiss(){
+		this.setState({
+			visible: false
+		})
 	}
 
 	get_bucketlists(page){
 		// returns the bucketlists that belong to a user
-		 console.log(this.state.currentPage)
 		axios.get(getApiUrl+page, {
 			headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}
 		}).then((response) => {
@@ -95,6 +101,13 @@ export default class Dashboard extends Component{
 		}).then(() => {
 			this.get_bucketlists(this.state.currentPage)
 		}).catch((err) => {
+			console.log(err.response)
+			if (err.response && err.response.status === 400) {
+				this.setState({
+					error: err.response.data.message,
+					visible: true
+				})
+			}
 			console.error("return err", err)
 		})
 	}
@@ -150,8 +163,8 @@ export default class Dashboard extends Component{
 			},
 			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
 		}).then(() => {
-			this.toggleUpdateModal()
-			this.get_bucketlists(this.state.currentPage)
+			this.toggleUpdateModal();
+			this.get_bucketlists(this.state.currentPage);
 		}).catch((err) => {
 			console.error("return err", err)
 		})
@@ -171,7 +184,11 @@ export default class Dashboard extends Component{
 		})
 	}
 
-	componentWillMount(){
+	onDismissAlert = () => {
+		this.setState({visible: false})
+	}
+
+	componentWillMount() {
 		// get the bucketlists
 		this.get_bucketlists(this.state.currentPage)
 	}
@@ -191,8 +208,18 @@ export default class Dashboard extends Component{
 		}
 		return(
 			<div>
-				<Header onSearch={this.onSearch} logout={this.logout}/>
-				<AddBucketlist handleSubmit={this.handleSubmit}/>
+				// application header
+				<Header onSearch={this.onSearch} logout={this.logout} />
+
+				//notification section
+				<div className="alert">
+					<Alert color="danger" isOpen={this.state.visible} toggle={this.onDismissAlert}>
+						<p>{ this.state.error }</p>
+					</Alert>
+				</div>
+
+				{/* add bucket list form */}
+				<AddBucketlist handleSubmit={this.handleSubmit} />
 
 				<h3 className="text-center">Your Bucketlists</h3>
 					<p className="text-center">{this.state.searchMessage}</p>
