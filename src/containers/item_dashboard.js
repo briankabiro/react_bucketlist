@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { Button, Alert } from 'reactstrap';
+import { Button } from 'reactstrap';
 import { GoPencil } from 'react-icons/lib/go';
 import Header from '../components/dashboard_header';
 import UpdateItem from '../components/update_item';
 import AddItemForm from '../components/add_item';
 import '../styles/item_dashboard.css';
 import Checkbox from '../components/checkbox';
+import AlertContainer from 'react-alert';
 
 const apiUrl = 'http://localhost:5000/bucketlists/';
 
@@ -24,10 +25,31 @@ export default class ItemDashboard extends Component{
 
 		this.state = {
 			items : [],
-			error: "",
 			redirect: false,
 			selectedItem: null,
 			showModal: false
+		}
+	}
+
+	alertOptions = {
+		offset:14,
+		position: 'top right',
+		theme: 'light',
+		time: 2000,
+		transition: 'fade'
+	}
+
+	showAlert = (message, status) => {
+		if (status === "err"){
+			this.msg.show(message, {
+				time:2000,
+				type:'error'
+			})
+		}else{
+			this.msg.show('Success', {
+				time:2000,
+				type: 'success'
+			})
 		}
 	}
 
@@ -45,14 +67,12 @@ export default class ItemDashboard extends Component{
 			},
 			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
 		}).then(() => {
+			this.showAlert("success", "success")
 			this.get_items()
 		}).catch((err) => {
-
 			console.error("return err", err)
 			if (err.response){
-				this.setState({
-					redirect: true
-				})
+				this.showAlert(err.response.data.message, "err")
 			}
 		})
 	}
@@ -138,6 +158,7 @@ export default class ItemDashboard extends Component{
 			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
 		}).then(() => {
 			this.toggleUpdateModal()
+			this.showAlert("success", "success")
 			this.get_items()
 		}).catch((err) => {
 			console.error("return err", err)
@@ -164,6 +185,10 @@ export default class ItemDashboard extends Component{
 		return(
 			<div>
 				<Header logout={this.logout} />
+
+				<AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
+
+				<h2 className="bucket-name">{ name }</h2>
 				<AddItemForm handleSubmit={this.handleSubmit} />
 				<p>{ error }</p>
 				<h3>Items</h3>

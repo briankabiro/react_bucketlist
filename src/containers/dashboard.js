@@ -8,6 +8,7 @@ import UpdateModal from '../components/update_bucketlist';
 import DeleteModal from '../components/delete_modal';
 import AddBucketlist from '../components/add_bucketlist';
 import Pagination from '../components/pagination';
+import AlertContainer from 'react-alert';
 
 const getApiUrl = 'http://localhost:5000/bucketlists/?page=';
 const apiUrl = 'http://localhost:5000/bucketlists/';
@@ -36,10 +37,26 @@ export default class Dashboard extends Component{
 		}
 	}
 
-	onDismiss(){
-		this.setState({
-			visible: false
-		})
+	alertOptions = {
+		offset:14,
+		position: 'top right',
+		theme: 'light',
+		time: 2000,
+		transition: 'fade'
+	}
+
+	showAlert = (message, status) => {
+		if (status === "err"){
+			this.msg.show(message, {
+				time:2000,
+				type:'error'
+			})
+		}else{
+			this.msg.show('Success', {
+				time:2000,
+				type: 'success'
+			})
+		}
 	}
 
 	get_bucketlists(page){
@@ -72,6 +89,7 @@ export default class Dashboard extends Component{
 			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
 		}).then(() => {
 			this.toggleDeleteModal()
+			this.showAlert("success", "success")
 			this.get_bucketlists(1)
 		}).catch((err) => {
 			console.error("return err", err)
@@ -98,10 +116,12 @@ export default class Dashboard extends Component{
 				name: name
 			},
 			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
-		}).then(() => {
+		}).then((response) => {
 			this.get_bucketlists(this.state.currentPage)
+			this.showAlert("success", "success")
 		}).catch((err) => {
 			console.log(err.response)
+			this.showAlert(err.response.data.message, "err")
 			if (err.response && err.response.status === 400) {
 				this.setState({
 					error: err.response.data.message,
@@ -164,6 +184,7 @@ export default class Dashboard extends Component{
 			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
 		}).then(() => {
 			this.toggleUpdateModal();
+			this.showAlert("success", "success")
 			this.get_bucketlists(this.state.currentPage);
 		}).catch((err) => {
 			console.error("return err", err)
@@ -184,39 +205,25 @@ export default class Dashboard extends Component{
 		})
 	}
 
-	onDismissAlert = () => {
-		this.setState({visible: false})
-	}
-
 	componentWillMount() {
 		// get the bucketlists
 		this.get_bucketlists(this.state.currentPage)
 	}
 
 	render(){
-		let bucketlists = this.state.bucketlists
 		let deleteBucketlist = this.deleteBucketlist
 		let toggleUpdateModal = this.toggleUpdateModal
-		let {showModal} = this.state
-		let showDeleteModal = this.state.showDeleteModal
 		let updateTitle = this.updateTitle
-		let selectedBucketlist = this.state.selectedBucketlist
 		let toggleDeleteModal = this.toggleDeleteModal
+		let { showDeleteModal, selectedBucketlist, bucketlists, showModal} = this.state
 
 		if (this.state.redirect){
 			return (<Redirect to="/login" />)
 		}
 		return(
 			<div>
-				// application header
 				<Header onSearch={this.onSearch} logout={this.logout} />
-
-				//notification section
-				<div className="alert">
-					<Alert color="danger" isOpen={this.state.visible} toggle={this.onDismissAlert}>
-						<p>{ this.state.error }</p>
-					</Alert>
-				</div>
+				<AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
 
 				{/* add bucket list form */}
 				<AddBucketlist handleSubmit={this.handleSubmit} />
