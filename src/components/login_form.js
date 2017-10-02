@@ -1,15 +1,17 @@
-import React from 'react';
+import React from 'react'
+import {FormGroup, Input, Label, Form, Button} from 'reactstrap'
 
-export default () => (
-	<div>
-		<h4>Register</h4>
-		<form>
-			<label>Username</label>
-			<input type="text" />
-			<label>Password</label>
-			<input type="password" />
-			<button type='submit'>Login</button>
-		</form>
-		<p>Don't have an account? Sign Up Here</p>
-	</div>
+export default (props) => (
+	<Form onSubmit={props.handleSubmit}>
+		<FormGroup>
+			<Label for="username">Username</Label>
+			<Input type="text" name = "username" placeholder="Username" required id="username" />
+		</FormGroup>
+
+		<FormGroup>
+			<Label for="password">Password</Label>
+			<Input type="password" name="password" placeholder="Password" required id="password" />
+		</FormGroup>
+		<Button color="primary">Login</Button>
+	</Form>
 )

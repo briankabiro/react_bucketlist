@@ -1,0 +1,39 @@
+.add-bucketlist-form{
+	display: flex;
+	justify-content: center;
+	margin:2em 0 2em 0;
+}
+
+.add-bucketlist-form input{
+	margin-right: 1em;
+	border-radius:5px;
+	border:1px solid grey;
+}
+
+.alert{
+	margin:0.5em 1em 0 1em;
+}
+
+.bucketlists{
+	display: flex;
+	flex-flow:row wrap;
+	justify-content: center;
+}
+
+.bucketlist{
+	display: flex;
+	flex-direction:column;
+	justify-content: space-around;
+	border: 1px solid grey;
+	border-radius:1em;
+	padding:1em;
+	margin:1em;
+}
+
+.bucketlist div h4{
+	text-align:center;
+}
+
+.buttons-div *{
+	margin:0.2em;
+}

@@ -1,0 +1,56 @@
+.add-item-form{
+	display: flex;
+	justify-content: center;
+	margin:2em 0 2em 0;
+}
+
+.alert{
+	margin:0.1em 1em 0 1em;
+}
+
+.bucket-name{
+		text-align:center;
+		margin:0.5em;
+}
+
+.add-item-form input{
+	margin-right: 1em;
+	border-radius:5px;
+	border:1px solid grey;
+}
+
+.list-items{
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+}
+
+.item{
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-around;
+	border:1px solid grey;
+	border-radius:1em;
+	width:20em;
+	padding:1em;
+	margin:1em;
+	box-shadow:0.1em 0.1em 0.1em #888888;
+}
+.item-left{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.item-right{
+	display: flex;
+	justify-content: space-around;
+}
+
+.item-left span{
+		margin-left:0.5em;
+}
+
+.item-right Button{
+	margin:0.5em;
+}
