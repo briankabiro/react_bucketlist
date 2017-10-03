@@ -231,21 +231,20 @@ export default class Dashboard extends Component{
 				<h3 className="text-center">Your Bucketlists</h3>
 					<p className="text-center">{this.state.searchMessage}</p>
 						<div className="bucketlists">
-							{bucketlists.map(function(bucketlist){
+							{bucketlists.sort(
+									(a, b) => Number(a.id) - Number(b.id)).map(function(bucketlist, index){
 								return(
-									<div className="bucketlist" key={bucketlist.id}>
-										<div>
-											<h3>{bucketlist.name}</h3>
-										</div>
-
-										<div className="buttons-div">
-											<Link to={`/bucketlists/${bucketlist.id}`}><Button color="success"><GoEye /></Button></Link>
-											<Button onClick={toggleUpdateModal.bind(this, bucketlist.id)}><GoPencil /></Button>
-											<Button color="danger" onClick = {toggleDeleteModal.bind(this, bucketlist.id)}>X</Button>
-										</div>
-										<UpdateModal showModal={showModal} id = {selectedBucketlist} updateTitle={updateTitle} toggle={toggleUpdateModal} />
-										<DeleteModal showDeleteModal={showDeleteModal} deleteBucketlist={() => deleteBucketlist} id={selectedBucketlist} toggle={toggleDeleteModal} />
-							</div>
+									<Bucketlist
+										key={bucketlist.id}
+										bucketlist={bucketlist}
+										toggleUpdateModal={toggleUpdateModal}
+										toggleDeleteModal={toggleDeleteModal}
+										deleteBucketlist={deleteBucketlist}
+										selectedBucketlist = {selectedBucketlist}
+										updateTitle={updateTitle}
+										showModal={showModal}
+										showDeleteModal={showDeleteModal}
+										/>
 								)
 							})}
 						</div>

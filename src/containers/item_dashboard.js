@@ -195,18 +195,17 @@ export default class ItemDashboard extends Component{
 				<div>
 					{items.map(function(item){
 						return(
-								<div className="item" key={item.id}>
-									<div className="item-left">
-										<Checkbox done={item.done} updateStatus={updateStatus.bind(this, item.id, item.done)} />
-										<span>{item.description}</span>
-									</div>
-
-									<div className="item-right">
-										<Button onClick={toggleUpdateModal.bind(this, item.id)}><GoPencil /></Button>
-										<Button color="danger" onClick = {deleteItem.bind(this, item.id)}>X</Button>
-										<UpdateItem showModal={showModal} id = {selectedItem} updateItemName={updateItemName} toggle={toggleUpdateModal} />
-									</div>
-								</div>
+							<Item
+								key={item.id}
+								item={item}
+								toggleUpdateModal={toggleUpdateModal}
+								toggleDeleteModal={toggleDeleteModal}
+								deleteItem={deleteItem}
+								selectedItem={selectedItem}
+								showModal={showModal}
+								updateItemName={updateItemName}
+								updateStatus={updateStatus}
+							/>
 						)
 					})}
 				</div>

@@ -9,7 +9,12 @@ export default (props) => (
 
         <ModalBody>
           <p>Are you sure you want to delete this bucketlist?</p>
-          <Button onClick = {props.deleteBucketlist()} id = {props.id} color="danger">Yes</Button>
+          <Button
+						onClick = {(event) => props.deleteBucketlist(event)}
+						id = {props.id}
+						color="danger">
+							Yes
+						</Button>
 				</ModalBody>
 
         <ModalFooter>
