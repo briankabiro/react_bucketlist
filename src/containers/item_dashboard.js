@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { Button } from 'reactstrap';
-import { GoPencil } from 'react-icons/lib/go';
 import Header from '../components/dashboard_header';
-import UpdateItem from '../components/update_item';
 import AddItemForm from '../components/add_item';
 import '../styles/item_dashboard.css';
-import Checkbox from '../components/checkbox';
 import AlertContainer from 'react-alert';
+import Item from '../components/item';
 
 const apiUrl = 'http://localhost:5000/bucketlists/';
 

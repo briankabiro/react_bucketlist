@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { GoEye, GoPencil } from 'react-icons/lib/go';
+import { Redirect } from 'react-router-dom';
+import { Row, Col } from 'reactstrap';
 import Header from '../components/dashboard_header';
-import UpdateModal from '../components/update_bucketlist';
-import DeleteModal from '../components/delete_modal';
 import AddBucketlist from '../components/add_bucketlist';
 import Pagination from '../components/pagination';
 import AlertContainer from 'react-alert';
+import Bucketlist from '../components/bucketlist';
 
 const getApiUrl = 'http://localhost:5000/bucketlists/?page=';
 const apiUrl = 'http://localhost:5000/bucketlists/';
