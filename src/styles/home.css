@@ -1,0 +1,28 @@
+.body{
+  display: flex;
+  flex-direction: column;
+  flex:1;
+  height:100vh;
+}
+
+.nav-bar{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex:1;
+  margin:0 1em 0 1em;
+}
+
+.right-nav-links *{
+  margin-left: 1em;
+}
+
+.content{
+  display: flex;
+  flex:9;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url(/public/3.jpg);
+  background-size:cover;
+}
