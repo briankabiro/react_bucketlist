@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { Navbar, NavbarBrand,  Nav , NavItem} from 'reactstrap';
+import { Navbar, NavbarBrand, Nav, NavItem } from 'reactstrap';
 
 export default () => (
 	<Navbar className="flex-row justify-content-between" color="faded" light>

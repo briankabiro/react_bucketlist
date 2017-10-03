@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
-import { Col } from 'reactstrap'
+import { Redirect } from 'react-router-dom';
+import { Col, Alert } from 'reactstrap';
 import Header from '../components/header';
 import RegisterForm from '../components/register_form';
 
@@ -38,7 +39,7 @@ export default class Register extends Component{
 		})
 	}
 
-	render(){
+	render() {
 		return (
 			<div>
 				<Header />
@@ -46,7 +47,6 @@ export default class Register extends Component{
 					<h4 className="text-center">Register</h4>
 					{this.state.message}
 					<RegisterForm handleSubmit={this.handleSubmit} />
-					<p>{this.state.error}</p>
 				</Col>
 			</div>
 		)

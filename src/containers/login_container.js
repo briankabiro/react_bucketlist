@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/header';
 import LoginForm from '../components/login_form';
-import { Col, Alert } from 'react-bootstrap'
 import '../styles/register.css';
 
 export default class Login extends Component{
@@ -11,11 +10,10 @@ export default class Login extends Component{
 		super()
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.onDismiss = this.onDismiss.bind(this);
-		this.onDismissSuccess = this.onDismissSuccess.bind(this)
 		this.state = {
 			redirect: false,
 			error: "",
-			alert:null
+			visible: false
 		}
 	}
 
@@ -24,19 +22,12 @@ export default class Login extends Component{
 		this.setState({ visible: false})
 	}
 
-	onDismissSuccess(){
-		this.setState({
-			alert: showAlert()
-		})
-	}
-
-
 	handleSubmit(event){
 		// event handler when the form is submitted
 		event.preventDefault();
 		let data = new FormData(event.target);
-		let username = data.get('username');
-		let password = data.get("password");
+		const username = data.get('username');
+		const password = data.get("password");
 
 		axios.post('http://localhost:5000/auth/login', {
 			username: username,
