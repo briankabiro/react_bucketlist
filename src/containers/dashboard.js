@@ -66,7 +66,6 @@ export default class Dashboard extends Component{
 		}).then((response) => {
 			this.setState({
 				bucketlists: response.data.results,
-				searchMessage:null,
 				pages: response.data.pages
 			})
 		}).catch((err) => {
@@ -75,7 +74,6 @@ export default class Dashboard extends Component{
 					redirect: true
 				})
 			}
-			console.error("Return Error", err)
 		})
 	}
 
@@ -92,7 +90,6 @@ export default class Dashboard extends Component{
 			this.showAlert("success", "success")
 			this.get_bucketlists(1)
 		}).catch((err) => {
-			console.error("return err", err)
 		})
 	}
 
@@ -120,7 +117,6 @@ export default class Dashboard extends Component{
 			this.get_bucketlists(this.state.currentPage)
 			this.showAlert("success", "success")
 		}).catch((err) => {
-			console.log(err.response)
 			this.showAlert(err.response.data.message, "err")
 			if (err.response && err.response.status === 400) {
 				this.setState({
@@ -128,7 +124,6 @@ export default class Dashboard extends Component{
 					visible: true
 				})
 			}
-			console.error("return err", err)
 		})
 	}
 
@@ -140,34 +135,22 @@ export default class Dashboard extends Component{
 	}
 
 	onSearch(event){
-		event.preventDefault();
-		let data = new FormData(event.target);
-		let q = data.get('search');
+		let q = event.target.value;
 		let searchUrl = apiUrl + "?q=";
-
-		if (!q){
-			this.setState({
-				searchMessage:null
-			})
-		}
-
 		axios({
 			'url':searchUrl + q,
 			method:'get',
 			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
 		}).then((response) => {
-			console.log('searched bucketlists', response.data)
 				this.setState({
 					bucketlists: response.data.results,
-					searchMessage:null
 				})
 		}).catch((err) => {
 			if (err.response){
 				this.setState({
-					searchMessage:"You don't have a bucketlist with that name",
+					bucketlists: []
 				})
 			}
-			console.error("return err", err)
 		})
 	}
 
@@ -187,7 +170,6 @@ export default class Dashboard extends Component{
 			this.showAlert("success", "success")
 			this.get_bucketlists(this.state.currentPage);
 		}).catch((err) => {
-			console.error("return err", err)
 		})
 	}
 
@@ -216,7 +198,6 @@ export default class Dashboard extends Component{
 		let updateTitle = this.updateTitle
 		let toggleDeleteModal = this.toggleDeleteModal
 		let { showDeleteModal, selectedBucketlist, bucketlists, showModal} = this.state
-
 		if (this.state.redirect){
 			return (<Redirect to="/login" />)
 		}
