@@ -13,4 +13,8 @@ describe('<Header />', () => {
   it('links to homepage', () => {
     expect(wrapper.find('Link').first().prop('to')).to.equal('/')
   })
+
+  it('links to register', () => {
+    expect(wrapper.find('Link').last().prop('to')).to.equal('/register')
+  })
 })

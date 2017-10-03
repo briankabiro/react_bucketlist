@@ -5,6 +5,6 @@ import Router from '../containers/router';
 
 describe('<Router />', () => {
   it('renders App', () => {
-  shallow(<Router />)
+    shallow(<Router />);
   })
 })

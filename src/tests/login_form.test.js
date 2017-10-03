@@ -4,12 +4,12 @@ import { expect } from 'chai';
 import { stub } from 'sinon';
 import LoginForm from '../components/register_form';
 
-describe('<RegisterForm />', () => {
+describe('<LoginForm />', () => {
   const handleSubmit = stub()
     .withArgs('username', 'password');
   const wrapper = shallow(<LoginForm handleSubmit={handleSubmit}/>);
 
-  it('renders 2 input boxes' , () => {
+  it('renders 2 input boxes', () => {
     expect(wrapper.find('Input')).to.have.length(2)
   })
 
@@ -22,9 +22,4 @@ describe('<RegisterForm />', () => {
      wrapper.simulate('submit');
      expect(handleSubmit.calledOnce).to.equal(true);
    });
-
-   it('shows an error when no name is entered', () => {
-     wrapper.simulate('submit')
-     console.log()
-   })
 })

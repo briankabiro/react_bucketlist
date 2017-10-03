@@ -15,7 +15,7 @@ describe('<RegisterForm />', () => {
 
   it('should have a `<form>` element', () => {
       expect(
-        wrapper.find('Form')).to.have.length(1)
+        wrapper.find('Form')).to.have.length(1);
     })
 
    it('should call handleSubmit', () => {
