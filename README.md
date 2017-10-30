@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/briankabiro/react_bucketlist.svg?branch=develop)](https://travis-ci.org/briankabiro/react_bucketlist)
 
-#Project Description
+# Project Description
 A front-end bucketlist web-app built with React. The application consumes an API created with Python and Flask.
 
 ### Setting Up The Project Locally
@@ -12,9 +12,9 @@ A front-end bucketlist web-app built with React. The application consumes an API
 4.  Start the server by running:
 `` yarn start ``
 
-##Running tests
-####To run the tests
+## Running tests
+#### To run the tests
 Run `` yarn test ``
 
-####To run with coverage
+#### To run with coverage
 Run ``yarn cover ``
