@@ -94,11 +94,33 @@ export default class ItemDashboard extends Component{
 		})
 	}
 
+	onSearch = event => {
+		let q = event.target.value;
+		let id = this.props.match.params.id;
+		let searchUrl = apiUrl + id + "/items/?q=";
+		axios({
+			'url':searchUrl + q,
+			method:'get',
+			headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
+		}).then((response) => {
+				this.setState({
+					items: response.data.results,
+				})
+		}).catch((err) => {
+			if(err.response){
+				const message = "No item with that name"
+				this.showAlert(message, "err")
+			}
+			console.error("return err", err)
+		})
+	}
+
 	get_items(){
-		let id = this.props.match.params.id
+		let id = this.props.match.params.id;
 		axios.get(apiUrl + id, {
 			headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}
 		}).then((response) => {
+			console.log(response.data.items)
 			this.setState({
 				items: response.data.items
 			})
@@ -162,35 +184,38 @@ export default class ItemDashboard extends Component{
 		})
 	}
 
-	componentDidMount(){
+	componentWillMount(){
 		//get the items
 		this.get_items()
 	}
 
 	render(){
-		const {items} =  this.state
-		const error = this.state.error
-		const {redirect} = this.state
+		console.log('this be props', this.props)
+		const name = this.props.location.state.name
 		const deleteItem = this.deleteItem
-		let updateItemName = this.updateItemName
-		let {showModal} = this.state
-		let selectedItem = this.state.selectedItem
+		const updateItemName = this.updateItemName
+		let {showModal, selectedItem,error, items, redirect } = this.state
 		const toggleUpdateModal = this.toggleUpdateModal
+		const toggleDeleteModal = this.toggleDeleteModal
+		let updateStatus = this.updateStatus
 		if (redirect){
-			return (<Redirect to="/login" />)
+			return (<Redirect to="/x" />)
 		}
+
 		return(
 			<div>
-				<Header logout={this.logout} />
+				<Header logout={this.logout} onSearch={this.onSearch}/>
 
 				<AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
 
 				<h2 className="bucket-name">{ name }</h2>
 				<AddItemForm handleSubmit={this.handleSubmit} />
-				<p>{ error }</p>
-				<h3>Items</h3>
-				<div>
-					{items.map(function(item){
+
+				<h4 className="text-center">Items</h4>
+
+				<div className="list-items">
+					{items.sort(
+							(a, b) => Number(a.id) - Number(b.id)).map(function(item){
 						return(
 							<Item
 								key={item.id}
