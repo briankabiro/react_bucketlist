@@ -1,5 +1,5 @@
 const localStorageMock = {
-  getItem: jest.fn(),
+  getItem: () => true,
   setItem: jest.fn(),
   removeItem: jest.fn(),
   clear: jest.fn()

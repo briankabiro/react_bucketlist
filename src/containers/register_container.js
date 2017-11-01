@@ -5,35 +5,45 @@ import { Col, Alert } from 'reactstrap';
 import Header from '../components/header';
 import RegisterForm from '../components/register_form';
 
-export default class Register extends Component{
-	constructor(props){
+export default class Register extends Component {
+	// class for Register component
+	constructor(props) {
 		super();
-		this.handleSubmit = this.handleSubmit.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.onDismiss = this.onDismiss.bind(this);
 		this.state = {
 			error: "",
-			message:""
+			message:"",
+			visible: false,
+			redirect: false
 		}
 	}
 
-	handleSubmit(event){
+	onDismiss() {
+		// function for disabling the error alert
+		this.setState({ visible: false})
+	}
+
+	handleSubmit(event) {
 		// event handler when the form is submitted
 		event.preventDefault();
 		let data = new FormData(event.target);
 
 		let username = data.get('username');
-		let password = data.get("password");
-		
+		let password = data.get('password');
 		axios.post('http://localhost:5000/auth/register', {
 			username: username,
-			password: password	
+			password: password
 		}).then((response) => {
 			this.setState({
-				message: response.data.message
+				message: response.data.message,
+				redirect: true
 			})
 		}).catch((err) => {
 			if (err.response){
 				this.setState({
-					error: err.response.data.message
+					error: err.response.data.message,
+					visible: true
 				})
 			}
 		})

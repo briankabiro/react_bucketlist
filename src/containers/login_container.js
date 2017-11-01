@@ -1,12 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { Alert, Col } from 'reactstrap';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/header';
 import LoginForm from '../components/login_form';
 import '../styles/register.css';
 
-export default class Login extends Component{
-	constructor(props){
+export default class Login extends Component {
+	constructor(props) {
 		super()
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.onDismiss = this.onDismiss.bind(this);
@@ -17,12 +18,12 @@ export default class Login extends Component{
 		}
 	}
 
-	onDismiss(){
+	onDismiss() {
 		// event handler when the form is submitted
-		this.setState({ visible: false})
+		this.setState({ visible: false })
 	}
 
-	handleSubmit(event){
+	handleSubmit(event) {
 		// event handler when the form is submitted
 		event.preventDefault();
 		let data = new FormData(event.target);
@@ -41,18 +42,17 @@ export default class Login extends Component{
 		}).catch((err) => {
 			if (err.response) {
 				this.setState({
-					error: err.response.data.message
+					error: err.response.data.message,
+					visible: true
 				})
-				this.alertError()
 			}else{
-				console.error("returns error", err)				
-			}		
+				console.error("returns error", err)
+			}
 		})
 	}
 
-	render(){
+	render() {
 		const { redirect } = this.state
-
 		if (redirect) {
 			return <Redirect to='/bucketlists' />
 		}
