@@ -16,13 +16,15 @@
 .right-nav-links *{
   margin-left: 1em;
 }
-
+.content-h2{
+  color: white;
+}
 .content{
   display: flex;
   flex:9;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url(/public/3.jpg);
+  background: url('../images/2.jpg');
   background-size:cover;
 }
