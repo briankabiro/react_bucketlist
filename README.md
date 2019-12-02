@@ -1,11 +1,11 @@
 [![Build Status](https://travis-ci.org/briankabiro/react_bucketlist.svg?branch=develop)](https://travis-ci.org/briankabiro/react_bucketlist)
 
 
-#### Description
+## Description
 
-This is a bucketlist app built with React.
+This is a bucketlist app built with React. The app consumes an API built with Flask. 
 
-#### Features
+## Features
 
 Users can:
 
