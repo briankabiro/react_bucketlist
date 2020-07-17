@@ -5,7 +5,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "bootstrap": "4.0.0-alpha.6",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.19",
     "react": "^15.3.0",
     "react-addons-css-transition-group": "^15.6.0",
     "react-addons-transition-group": "^15.6.0",
